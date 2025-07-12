@@ -1,185 +1,50 @@
 # Laravel Boilerplate
 
-# Recreation Steps
-The steps ran to create this project.
+This is a boilerplate that sets up a Laravel Project with Vue 3, InertiaJs, Tailwind CSS, Laravel Sail and Devcontainer.
 
-## Instal laravel CLI tool
+It is designed to be used with the [Laravel CLI tool](https://laravel.com/docs/10.x/installation#installing-the-laravel-cli-tool).
 
+# Features
+- **Vue 3**: Modern JavaScript framework for building user interfaces.
+- **Inertia.js**: Allows you to create single-page apps using classic server-side routing
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **Laravel Sail**: Provides a Docker development environment for Laravel applications.
+- **Devcontainer**: Pre-configured development environment for Visual Studio Code.
+
+# Getting Started
+The easiest way to create a new project using this boilerplate is to use the Official Laravel CLI tool `laravel/installer`.
+
+
+## Method 1: Installing the Laravel CLI tool globally in your system
+This method requires you to have the Laravel CLI tool installed globally on your system. 
+
+Requires:
+- PHP
+- Composer
+
+To install the Laravel CLI tool globally, run the following command:
 ```bash
 composer global require laravel/installer
 ```
 
-## Creating using Vue StarterKit
+Once you have the Laravel CLI tool installed, you can create a new project using the following command:
+```bash
+APP_NAME=new-app
+
+laravel new $APP_NAME --using=rasmusgodske/laravel-sail-vue-starterkit
+```
+
+## Method 2: Using Laravel Cli tool docker wrapper
+If you prefer not to install the Laravel CLI tool globally, you can use the [docker-laravel-cli](https://github.com/RasmusGodske/docker-laravel-cli) which provides a Docker wrapper for the Laravel CLI tool. This allows you to run the Laravel CLI commands without installing it globally on your system.
+
 
 ```bash
-laravel new new-app --vue --phpunit
-```
+APP_NAME=new-app
 
-NOTE: Select "no" to npm install
-
-## Moving files to root directory
-
-```bash
-# Move files from vendor directory
-mv ./new-app/vendor/* ./vendor/
-rm -r ./new-app/vendor
-
-# Move the rest
-cp -r ./new-app/. ./ && rm -rf ./new-app
+docker run -it --rm -v $(pwd):/workspace -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) godske/docker-laravel-cli:latest laravel new $APP_NAME --using=rasmusgodske/laravel-sail-vue-starterkit
 ```
 
 
-## Install Laravel Sail
 
-Install Laravel Sail composer package
-```bash
-composer require laravel/sail --dev
-```
-
-```bash
-php artisan sail:install --with=pgsql,redis
-```
-
-## Add debug support
-We need to add debug support by adding:
-`SAIL_XDEBUG_CONFIG=client_host=host.docker.internal client_port=9003 start_with_request=default idekey=VSCODE` to the env
-
-```bash
-echo "SAIL_XDEBUG_CONFIG=\"client_host=host.docker.internal client_port=9003 start_with_request=default idekey=VSCODE\"" >> .env
-
-echo "SAIL_XDEBUG_CONFIG=\"client_host=host.docker.internal client_port=9003 start_with_request=default idekey=VSCODE\"" >> .env
-
-
-echo "SAIL_XDEBUG_MODE=\"develop,debug,trace,coverage\"" >> .env
-echo "SAIL_XDEBUG_MODE=\"develop,debug,trace,coverage\"" >> .env.example
-```
-
-## Add launch.json
-Add the following to `.vscode/launch.json`:
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-      {
-          "name": "🪲 Listen for Xdebug",
-          "type": "php",
-          "request": "launch",
-          "log":false,
-          "port": 9003,
-          "pathMappings": {
-              // The path where the project files are mounted within the containers running xdebug.
-              // we need to tell xdebug that the files are located in a different path
-              // than within the vscode workspace
-              "/var/www/html": "${workspaceFolder}"
-          }
-      }
-  ]
-}
-```
-
-
-## Start Sail
-Start the Sail environment with the following command:
-```bash
-sail up
-```
-
-## Install NPM dependencies
-Install the NPM dependencies by running:
-```bash
-sail npm install
-``` 
-
-## run migrations
-Run the migrations to set up the database:
-```bash
-sail artisan migrate
-```
-
-## Run node install
-Run the node install to set up the frontend:
-```bash
-sail npm run dev
-```
-
-## Configuring Pint
-
-pint.json
-```json
-{
-  "preset": "laravel",
-  "rules": {
-    "array_syntax": { "syntax": "short" },
-    "ordered_imports": true,
-    "single_quote": true
-  }
-}
-```
-
-Add the following to your `composer.json` file under the `scripts` section:
-```json
-"scripts": {
-  "format:php": "pint", 
-  "format:php-dirty": "pint --dirty",
-}
-```
-
-
-## Install Husky
-Install Husky to manage Git hooks:
-```bash
-npm install --save-dev husky
-npx husky init
-```
-
-Create the following hooks:
-
-.husky/pre-commit
-```bash
-#!/bin/sh
-echo "📋 Running pre-commit checks..."
-
-# Run formatter on dirty files
-./vendor/bin/sail composer format:php-dirty
-
-# Check if the formatting created unstaged changes
-if [ -n "$(git diff --name-only)" ]; then
-  echo "❌ Code formatting fixed issues but the changes aren't staged."
-  echo "Please review the formatting changes with 'git diff', then stage them with 'git add -u' and try committing again."
-  exit 1
-fi
-
-echo "✅ Pre-commit checks passed!"
-```
-
-.husky/pre-commit
-```bash
-#!/usr/bin/env sh
-# Check for PSR compliance before committing
-
-echo "📋 Running pre-commit checks..."
-
-# Run the command, saving output to a file while displaying it
-./vendor/bin/sail composer dump-autoload --dry-run -o --strict-psr 2>&1 | tee /tmp/composer_output.txt
-STATUS=$?
-
-# Check if we have PSR compliance errors
-if grep -q "does not comply with psr-4 autoloading standard" /tmp/composer_output.txt; then
-  echo ""
-  echo "❌ PSR-4 compliance error detected! Please fix the file paths to match PSR-4 autoloading."
-  echo "❌ Commit aborted."
-  exit 1
-elif [ $STATUS -ne 0 ]; then
-  echo ""
-  echo "❌ Error detected in autoload generation. Commit aborted."
-  exit 1
-else
-  echo "✅ PSR compliance check passed!"
-fi
-
-# Clean up
-rm -f /tmp/composer_output.txt
-```
 
 
