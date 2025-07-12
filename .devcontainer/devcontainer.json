@@ -1,0 +1,51 @@
+{
+  "name": "Debian",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "INSTALL_ZSH": "true",
+      "USER_UID": "1000",
+      "USER_GID": "1000"
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-vendor,target=${containerWorkspaceFolder}/vendor,type=volume",
+  ],
+  "workspaceFolder": "/home/vscode/project",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/project,type=bind,consistency=delegated",
+  "runArgs": [
+    "--init",
+    "--privileged"
+  ],
+  "forwardPorts": [
+    8080,
+  ],
+  "postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "Vue.volar",
+        "xdebug.php-debug",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "bmewburn.vscode-intelephense-client"
+      ],
+      "settings": {
+        // Stop VSCode from trying to auto-detect tasks such as gulp and grunt.
+        // You can delete this if you want to use auto-detection.
+        "task.autoDetect": "off",
+        "terminal.integrated.defaultProfile.linux": "zsh",
+      },
+    }
+  },
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    },
+  "containerEnv": {
+    "APP_PORT": "8080"
+  }
+
+}

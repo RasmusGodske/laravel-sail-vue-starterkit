@@ -1,0 +1,14 @@
+#!/bin/sh
+echo "📋 Running pre-commit checks..."
+
+# Run formatter on dirty files
+./vendor/bin/sail composer format:php-dirty
+
+# Check if the formatting created unstaged changes
+if [ -n "$(git diff --name-only)" ]; then
+  echo "❌ Code formatting fixed issues but the changes aren't staged."
+  echo "Please review the formatting changes with 'git diff', then stage them with 'git add -u' and try committing again."
+  exit 1
+fi
+
+echo "✅ Pre-commit checks passed!"
