@@ -2,6 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Data\Inertia\InertiaAuthData;
+use App\Data\Inertia\InertiaQuoteData;
+use App\Data\Inertia\InertiaSharedData;
+use App\Data\Inertia\InertiaZiggyData;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -39,18 +43,29 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
-        return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth' => [
-                'user' => $request->user(),
-            ],
-            'ziggy' => [
-                ...(new Ziggy)->toArray(),
-                'location' => $request->url(),
-            ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-        ];
+        $inertiaAuthData = new InertiaAuthData(
+            user: $request->user(),
+        );
+
+        $inertiaZiggyData = InertiaZiggyData::fromZiggy(
+            ziggy: new Ziggy,
+            request: $request,
+        );
+
+        $inertiaSharedData = new InertiaSharedData(
+            name: config('app.name'),
+            quote: new InertiaQuoteData(
+                author: trim($author),
+                message: trim($message),
+            ),
+            auth: $inertiaAuthData,
+            sidebarOpen: ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            ziggy: $inertiaZiggyData,
+            errors: $this->resolveValidationErrors($request),
+        );
+
+        $inertiaSharedDataArray = $inertiaSharedData->toArray();
+
+        return $inertiaSharedDataArray;
     }
 }

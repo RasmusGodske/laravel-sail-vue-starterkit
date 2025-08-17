@@ -10,6 +10,13 @@ It is designed to be used with the [Laravel CLI tool](https://laravel.com/docs/1
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
 - **Laravel Sail**: Provides a Docker development environment for Laravel applications.
 - **Devcontainer**: Pre-configured development environment for Visual Studio Code.
+- **TypeScript**: Static type checking for JavaScript, enhancing code quality and maintainability.
+- **Code Quality Tools**: Includes Pint for PHP formatting and Husky for Git hooks.
+- **IDE Enhancements**: Laravel IDE Helper for autocompletion and better developer experience.
+- **Debugging Tools**: Laravel Debugbar for visualizing queries, routes, and performance metrics.
+- **Type Inertia Shared Data**: Implements type-safe shared data for Inertia.js, ensuring better type safety and autocompletion in Vue components.
+- **Development Workflow**: Composer scripts for common tasks to streamline development processes.
+
 
 # Getting Started
 The easiest way to create a new project using this boilerplate is to use the Official Laravel CLI tool `laravel/installer`.
@@ -44,6 +51,9 @@ APP_NAME=new-app
 docker run -it --rm -v $(pwd):/workspace -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) godske/docker-laravel-cli:latest laravel new $APP_NAME --using=rasmusgodske/laravel-sail-vue-starterkit
 ```
 
+
+## Starter Kit Documentation
+For detailed documentation on how this specific starter kit is set up, please refer to the [Setup Guide](Docs/StarterKit/Setup.md).
 
 
 

@@ -8,6 +8,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('dashboard', function () {
+    Inertia::share('appName', config('app.name'));
+
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
