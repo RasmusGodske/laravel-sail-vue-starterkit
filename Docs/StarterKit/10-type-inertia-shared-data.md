@@ -335,7 +335,15 @@ export interface User {
 }
 ```
 
-Since we deleted the `User` type is no longer needed as we have an auto generated type for the `User` model within resources/js/types/generated.d.ts. We should also update the following files to remove the old `User` type:
+Since we deleted the `User` type is no longer needed as we have an auto generated type for the `User` model within resources/js/types/generated.d.ts. 
+
+Also remove the unused `Config` import from `resources/js/types/index.d.ts`:
+```typescript
+// Remove this line:
+import type { Config } from 'ziggy-js';
+```
+
+We should also update the following files to remove the old `User` type:
 Update `resources/js/types/globals.d.ts` to remove the old `User` type:
 
 `resources/js/components/UserInfo.vue`:

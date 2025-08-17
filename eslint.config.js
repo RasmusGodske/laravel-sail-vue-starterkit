@@ -11,8 +11,25 @@ export default defineConfigWithVueTs(
     },
     {
         rules: {
+            // Vue-specific rules
             'vue/multi-word-component-names': 'off',
+            'vue/max-attributes-per-line': 'off', // Let Prettier handle this
+            'vue/first-attribute-linebreak': 'off', // Let Prettier handle this
+            'vue/html-closing-bracket-newline': 'off', // Let Prettier handle this
+            'vue/html-indent': 'off', // Let Prettier handle this
+            'vue/html-closing-bracket-spacing': 'off', // Let Prettier handle this
+            'vue/singleline-html-element-content-newline': 'off', // Let Prettier handle this
+            'vue/multiline-html-element-content-newline': 'off', // Let Prettier handle this
+            
+            // TypeScript rules
             '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
+            
+            // General code quality rules
+            'no-console': 'warn',
+            'no-debugger': 'warn',
+            'prefer-const': 'error',
+            'no-var': 'error',
         },
     },
     prettier,

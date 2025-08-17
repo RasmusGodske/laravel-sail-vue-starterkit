@@ -26,6 +26,7 @@ Follow these steps in order to recreate the starter kit:
 9. **[Development Workflow](09-development-workflow.md)** - Create Composer scripts for common tasks
 10. **[Type Inertia Shared Data](10-type-inertia-shared-data.md)** - Implement type-safe shared data for Inertia.js
 11. **[Install Laravel Debugbar](11-install-laravel-debugbar.md)** - Add debugging tools for development
+12. **[Frontend Code Quality Enhancement](12-frontend-code-quality-enhancement.md)** - Enhance ESLint and Prettier for better Vue.js development
 
 ## Quick Start
 

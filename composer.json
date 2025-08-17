@@ -78,7 +78,8 @@
           "@php artisan ide-helper:generate",
           "@php artisan ide-helper:models -W",
           "@php artisan ziggy:generate --types resources/js/types/ziggy-auto-generated.js --types-only",
-          "pint pint  --dirty"
+          "pint --dirty",
+          "npm run format"
         ]
     },
     "extra": {

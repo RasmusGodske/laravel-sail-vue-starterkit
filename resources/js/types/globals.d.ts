@@ -13,7 +13,6 @@ declare module 'vite/client' {
     }
 }
 
-
 export type AppPageProps = App.Data.Inertia.InertiaSharedData & {
     // Use the original Ziggy type from ziggy-js instead of our own Config type
     ziggy: Config & { location: string };
