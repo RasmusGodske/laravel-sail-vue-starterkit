@@ -43,9 +43,13 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
-        $inertiaAuthData = new InertiaAuthData(
-            user: $request->user(),
-        );
+
+        $inertiaAuthData = null;
+        if ($request->user()) {
+            $inertiaAuthData = new InertiaAuthData(
+                user: $request->user(),
+            );
+        }
 
         $inertiaZiggyData = InertiaZiggyData::fromZiggy(
             ziggy: new Ziggy,
