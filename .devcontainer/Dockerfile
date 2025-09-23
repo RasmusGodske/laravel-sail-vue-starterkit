@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/php:8.3
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 
 RUN mkdir -p /home/vscode/project
 WORKDIR /home/vscode/project
