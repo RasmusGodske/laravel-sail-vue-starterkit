@@ -16,9 +16,9 @@ class InertiaSharedData extends Data
     public function __construct(
         public string $name,
         public InertiaQuoteData $quote,
-        public InertiaAuthData $auth,
         public InertiaZiggyData $ziggy,
         public bool $sidebarOpen,
         public object $errors,
+        public ?InertiaAuthData $auth = null,
     ) {}
 }
