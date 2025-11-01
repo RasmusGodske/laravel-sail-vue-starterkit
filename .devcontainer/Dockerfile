@@ -3,12 +3,12 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 RUN mkdir -p /home/vscode/project
 WORKDIR /home/vscode/project
 
-# Install additional PHP extensions and dependencies
+# Install PHP and additional PHP extensions and dependencies
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y libzip-dev libsodium-dev \
-       libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql zip pcntl sodium gd
+    && apt-get install -y php php-cli php-fpm php-json php-common php-mysql \
+       php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath \
+       php-dev libzip-dev libsodium-dev libfreetype6-dev libjpeg-turbo8-dev \
+       libpng-dev
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
