@@ -18,12 +18,12 @@ class InertiaZiggyData extends Data
 {
     /**
      * @param  string  $url  The base URL for the Ziggy routes.
-     * @param  int  $port  The port number for the Ziggy routes.
+     * @param  int|null  $port  The port number for the Ziggy routes.
      * @return void
      */
     public function __construct(
         public string $url,
-        public int $port,
+        public ?int $port,
         public array $defaults,
         public array $routes,
         public string $location,
